@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PROXY MTH — Free Fire</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            touch-action: manipulation;
+        }
+
+        body {
+            background: #0a0a0f;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #fff;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 🖥️ FONDO ANIMADO DE CÓDIGO HACKER */
+        .fondo-hacker {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .codigo {
+            position: absolute;
+            color: #00ff88;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 18px;
+            opacity: 0.18;
+            white-space: nowrap;
+            animation: caer linear infinite;
+            text-shadow: 0 0 5px #00ff88;
+        }
+
+        @keyframes caer {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* 🏷️ LOGO PROXY MTH */
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo h1 {
+            font-size: 42px;
+            font-weight: 900;
+            color: #ff0040;
+            text-shadow: 0 0 10px #ff0040, 0 0 20px #ff0040, 0 0 30px #ff0040;
+            letter-spacing: 2px;
+            animation: brillo 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes brillo {
+            from { text-shadow: 0 0 10px #ff0040, 0 0 20px #ff0040; }
+            to { text-shadow: 0 0 15px #ff0040, 0 0 30px #ff0040, 0 0 40px #ff0040; }
+        }
+
+        .logo span {
+            display: block;
+            font-size: 26px;
+            color: #fff;
+            margin-top: -8px;
+        }
+
+        /* 🏷️ CRÉDITOS CHAMO YT */
+        .creditos {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            background: rgba(0,255,136,0.1);
+            color: #00ff88;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(0,255,136,0.3);
+            z-index: 100;
+            letter-spacing: 1px;
+        }
+
+        /* 📋 CONTENEDOR DE OPCIONES */
+        .contenedor {
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 🎯 BOTÓN DE OPCIÓN */
+        .opcion {
+            background: rgba(30,30,47,0.85);
+            border: 2px solid rgba(42,42,60,0.8);
+            border-radius: 12px;
+            padding: 16px 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+
+        .opcion.activo {
+            border-color: #ff0040;
+            box-shadow: 0 0 15px rgba(255,0,64,0.4), inset 0 0 10px rgba(255,0,64,0.1);
+            background: rgba(37,26,47,0.9);
+            animation: pulsar 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulsar {
+            0%, 100% { box-shadow: 0 0 15px rgba(255,0,64,0.4); }
+            50% { box-shadow: 0 0 25px rgba(255,0,64,0.6); }
+        }
+
+        .opcion:hover {
+            border-color: rgba(255,0,64,0.5);
+            background: rgba(40,30,60,0.8);
+        }
+
+        .opcion h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .opcion p {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .opcion .indicador {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid #444;
+            transition: all 0.3s;
+            background: #222;
+        }
+
+        .opcion.activo .indicador {
+            background: #ff0040;
+            border-color: #ff0040;
+            box-shadow: 0 0 10px #ff0040, inset 0 0 5px rgba(255,255,255,0.3);
+        }
+
+        /* 🎮 INFO DEL JUEGO */
+        .info-juego {
+            background: rgba(30,30,47,0.85);
+            border: 2px solid rgba(42,42,60,0.8);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            backdrop-filter: blur(5px);
+        }
+
+        .icono-juego {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #ff6a00, #ff0050);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 0 10px rgba(255,106,0,0.3);
+        }
+
+        .datos-juego h4 {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .datos-juego span {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .boton-copiar {
+            margin-left: auto;
+            background: transparent;
+            border: none;
+            color: #666;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .boton-copiar:hover {
+            transform: rotate(180deg);
+            color: #00ff88;
+        }
+
+        /* 🚀 BOTÓN LAUNCH */
+        .btn-launch {
+            width: 100%;
+            max-width: 450px;
+            margin-top: 20px;
+            padding: 16px;
+            background: linear-gradient(90deg, #ff0040, #ff3060, #ff0040);
+            background-size: 200% 100%;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(255,0,64,0.4);
+            transition: all 0.3s;
+            position: relative;
+            z-index: 10;
+            animation: brilloLaunch 3s ease-in-out infinite;
+        }
+
+        @keyframes brilloLaunch {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .btn-launch:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 10px rgba(255,0,64,0.4);
+        }
+
+        /* ⚙️ BOTONES INFERIORES */
+        .botones-inferiores {
+            display: flex;
+            gap: 20px;
+            margin-top: 25px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn-inferior {
+            width: 60px;
+            height: 60px;
+            background: rgba(42,42,60,0.8);
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .btn-inferior:hover {
+            transform: scale(1.1);
+            background: rgba(60,60,90,0.8);
+        }
+
+        .btn-inferior.juego {
+            background: linear-gradient(135deg, #ff0040, #ff3060);
+            box-shadow: 0 0 15px rgba(255,0,64,0.4);
+        }
+
+        /* ✅ ESTADO */
+        .estado {
+            margin-top: 15px;
+            font-size: 13px;
+            color: #00ff88;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            text-shadow: 0 0 5px rgba(0,255,136,0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 💻 FONDO HACKER ANIMADO -->
+    <div class="fondo-hacker" id="fondoHacker"></div>
+
+    <!-- 🏷️ TUS CRÉDITOS EN ESQUINA -->
+    <div class="creditos">👤 CHAMO YT</div>
+
+    <!-- 🏷️ LOGO -->
+    <div class="logo">
+        <h1>PROXY</h1>
+        <span>MTH</span>
+    </div>
+
+    <!-- 📋 OPCIONES DEL PROXY -->
+    <div class="contenedor">
+        <div class="opcion" id="op1" onclick="toggle(1)">
+            <h3>HS Cuello + Antena</h3>
+            <p>Activa disparos a la zona del cuello.</p>
+            <div class="indicador"></div>
+        </div>
+
+        <div class="opcion" id="op2" onclick="toggle(2)">
+            <h3>HS Alto + Antena</h3>
+            <p>Activa disparos a la parte superior de la cabeza.</p>
+            <div class="indicador"></div>
+        </div>
+
+        <div class="opcion" id="op3" onclick="toggle(3)">
+            <h3>HS Pecho + Antena</h3>
+            <p>Activa disparos a la zona del pecho.</p>
+            <div class="indicador"></div>
+        </div>
+
+        <div class="opcion" id="op4" onclick="toggle(4)">
+            <h3>Pantalla Estática</h3>
+            <p>Permite moverse instantáneamente.</p>
+            <div class="indicador"></div>
+        </div>
+
+        <div class="opcion" id="op5" onclick="toggle(5)">
+            <h3>Super Salto</h3>
+            <p>Salta mucho más alto de lo normal.</p>
+            <div class="indicador"></div>
+        </div>
+
+        <div class="opcion" id="op6" onclick="toggle(6)">
+            <h3>Salto Atrás Clásico</h3>
+            <p>Activa el salto hacia atrás estilo antiguo.</p>
+            <div class="indicador"></div>
+        </div>
+
+        <div class="opcion" id="op7" onclick="toggle(7)">
+            <h3>Cambio Rápido de Arma</h3>
+            <p>Cambia de arma casi al instante.</p>
+            <div class="indicador"></div>
+        </div>
+
+        <div class="opcion" id="op8" onclick="toggle(8)">
+            <h3>Sensibilidad Sin Límite</h3>
+            <p>Permite sensibilidad superior a la normal.</p>
+            <div class="indicador"></div>
+        </div>
+
+        <!-- 🎮 INFO FREE FIRE -->
+        <div class="info-juego">
+            <div class="icono-juego">🎮</div>
+            <div class="datos-juego">
+                <h4>Free Fire MAX</h4>
+                <span>Versión 2.127.1</span>
+            </div>
+            <button class="boton-copiar" onclick="copiarCodigo()">⟳</button>
+        </div>
+    </div>
+
+    <!-- 🚀 BOTÓN LAUNCH -->
+    <button class="btn-launch" onclick="lanzar()">▶️ LAUNCH</button>
+
+    <!-- ⚙️ BOTONES INFERIORES -->
+    <div class="botones-inferiores">
+        <button class="btn-inferior juego">🎮</button>
+        <button class="btn-inferior">⚙️</button>
+    </div>
+
+    <!-- ✅ ESTADO -->
+    <div class="estado" id="estado">✅ Proxy MTH cargado — Creado por CHAMO YT</div>
+
+<script>
+    // 💻 GENERAR CÓDIGO ANIMADO EN EL FONDO
+    const codigoLineas = [
+        '0100100101100110', 'function hack() {', 'while(true) {',
+        'PROXY_MTH=true;', 'headshot=100%;', 'aimbot=ON;',
+        'speed=2.5x;', 'jump=MAX;', 'fire_rate=INSTANT;',
+        'sensi=UNLIMITED;', 'kill_all();', '// CHAMO YT',
+        '0x00FF88;', '0xFF0040;', 'encrypt(data);',
+        'bypass=SUCCESS;', 'inject=COMPLETE;', '// MTH TEAM'
+    ];
+
+    const fondo = document.getElementById('fondoHacker');
+    const cantidad = 25;
+
+    for(let i = 0; i < cantidad; i++) {
+        const linea = document.createElement('div');
+        linea.className = 'codigo';
+        linea.textContent = codigoLineas[Math.floor(Math.random() * codigoLineas.length)];
+        linea.style.left = `${Math.random() * 100}%`;
+        linea.style.animationDuration = `${6 + Math.random() * 10}s`;
+        linea.style.animationDelay = `${Math.random() * 8}s`;
+        fondo.appendChild(linea);
+    }
+
+    // 📊 Estado de cada opción
+    const estados = {
+        1: false, 2: false, 3: false,
+        4: false, 5: false, 6: false,
+        7: false, 8: false
+    };
+
+    // 🔄 Activar / Desactivar opción
+    function toggle(num) {
+        estados[num] = !estados[num];
+        const op = document.getElementById(`op${num}`);
+        op.classList.toggle('activo', estados[num]);
+
+        const nombres = {
+            1: 'HS Cuello + Antena',
+            2: 'HS Alto + Antena',
+            3: 'HS Pecho + Antena',
+            4: 'Pantalla Estática',
+            5: 'Super Salto',
+            6: 'Salto Atrás',
+            7: 'Cambio Rápido',
+            8: 'Sensibilidad'
+        };
+
+        document.getElementById('estado').textContent = 
+            estados[num] ? `✅ ${nombres[num]} — ACTIVADO por CHAMO YT` : `❌ ${nombres[num]} — Desactivado`;
+    }
+
+    // 🚀 Lanzar Proxy
+    function lanzar() {
+        const activados = Object.entries(estados).filter(([k,v])=>v).map(([k])=>k);
+        if(activados.length === 0) {
+            document.getElementById('estado').textContent = '⚠️ Activa al menos una opción primero';
+            return;
+        }
+        document.getElementById('estado').innerHTML = 
+            '🚀 <b>PROXY MTH ACTIVO</b> — ' + activados.length + ' módulos cargados | Creado por CHAMO YT ✅';
+    }
+
+    // 📋 Copiar configuración
+    function copiarCodigo() {
+        const activos = Object.entries(estados)
+            .filter(([k,v])=>v)
+            .map(([k])=>`MOD${k}=ON`)
+            .join('&');
+        if(!activos) {
+            alert('No hay opciones activadas');
+            return;
+        }
+        navigator.clipboard.writeText('PROXY_MTH_FF | Creado por CHAMO YT: ' + activos).then(()=>{
+            document.getElementById('estado').textContent = '📋 Código copiado al portapapeles ✅ — CHAMO YT';
+        });
+    }
+</script>
+</body>
+</html>
